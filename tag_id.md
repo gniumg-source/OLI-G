@@ -1,0 +1,283 @@
+version: 2.0.0
+tags:
+
+# The following tags are used to label the address/contract.
+
+- tag_id: contract_name
+  name: Contract Name
+  description: This tag refers to the fundamental descriptor that provides a clear and immediate understanding of an address's purpose or role. It should offer a straightforward one-word detailed definition into the functionality of the address. For example, the Uniswap router contract would have the contract_name = 'router'.
+  schema:
+    type: string
+  creator: growthepie
+
+- tag_id: is_eoa
+  name: Is EOA
+  description: Is the account an Externally Owned Account (EOA)?
+  schema:
+    type: boolean
+  creator: growthepie
+
+- tag_id: is_contract
+  name: Is Contract
+  description: Is the address a contract?
+  schema:
+    type: boolean
+  creator: growthepie
+
+- tag_id: is_factory_contract
+  name: Is Factory Contract
+  description: Is the address a factory contract? Does it have functions which are able to deploy another contract?
+  schema:
+    type: boolean
+  creator: growthepie
+
+- tag_id: deployment_tx
+  name: Deployment Transaction
+  description: The transaction that deployed the contract.
+  schema:
+    type: string
+    minLength: 66
+    maxLength: 66
+  creator: growthepie
+
+- tag_id: deployer_address
+  name: Deployer Address
+  description: The address that deployed the contract.
+  schema:
+    type: string
+    minLength: 42
+    maxLength: 42
+  creator: growthepie
+
+- tag_id: owner_project
+  name: Owner Project
+  description: The project that owns the contract or EOA. Project identifiers are standardized and defined in the OSS Directory, which maintains a comprehensive registry of open source projects in the blockchain ecosystem.
+  schema:
+    type: string
+    # Valid values defined in: https://github.com/opensource-observer/oss-directory
+  creator: growthepie
+
+- tag_id: deployment_date
+  name: Deployment Date
+  description: The date the contract was deployed.
+  schema:
+    type: string
+    format: date-time
+  creator: growthepie
+
+- tag_id: deployment_block
+  name: Deployment Block
+  description: The block number in which the contract was deployed.
+  schema:
+    type: integer
+  creator: Sourcify
+
+- tag_id: is_proxy
+  name: Is Proxy
+  description: Is the contract a proxy contract?
+  schema:
+    type: boolean
+  creator: growthepie
+
+- tag_id: is_safe_contract
+  name: Is Multisig
+  description: Is the address a Safe or Multisig contract?
+  schema:
+    type: boolean
+  creator: growthepie
+
+- tag_id: erc_type
+  name: ERC Type
+  description: Array of all ERC standards the contract implements.
+  schema:
+    type: array
+    items:
+      type: string
+      enum: [erc20, erc173, erc223, erc621, erc677, erc721, erc777, erc827, erc884, erc918, erc948, erc965, erc998, erc1155, erc1203, erc1400, erc1404, erc1594, erc1643, erc1644, erc1820, erc4626]
+  creator: growthepie
+
+- tag_id: erc20.name
+  name: ERC20 Name
+  description: The name of the token assigned through the ERC20 standard.
+  schema:
+    type: string
+  creator: growthepie
+
+- tag_id: erc20.symbol
+  name: ERC20 Symbol
+  description: The symbol of the token assigned through the ERC20 standard.
+  schema:
+    type: string
+  creator: growthepie
+
+- tag_id: erc20.decimals
+  name: ERC20 Decimals
+  description: The number of decimals of the token assigned through the ERC20 standard.
+  schema:
+    type: integer
+  creator: growthepie
+
+- tag_id: erc721.name
+  name: ERC721 Name
+  description: The name of the collection assigned through the ERC721 standard.
+  schema:
+    type: string
+  creator: growthepie
+
+- tag_id: erc721.symbol
+  name: ERC721 Symbol
+  description: The symbol of the collection assigned through the ERC721 standard.
+  schema:
+    type: string
+  creator: growthepie
+
+- tag_id: erc1155.name
+  name: ERC1155 Name
+  description: The name of the collection assigned through the ERC1155 standard.
+  schema:
+    type: string
+  creator: growthepie
+
+- tag_id: erc1155.symbol
+  name: ERC1155 Symbol
+  description: The symbol of the collection assigned through the ERC1155 standard.
+  schema:
+    type: string
+  creator: growthepie
+
+- tag_id: usage_category
+  name: Usage Category
+  description: The category of usage for the contract.
+  schema:
+    type: string
+    # Valid values defined in: https://github.com/openlabelsinitiative/OLI/blob/main/1_label_schema/tags/valuesets/usage_category.yml
+  creator: growthepie
+
+- tag_id: version
+  name: Version
+  description: The release version of the dApp (i.e. 2 for Uniswap v2 contracts).
+  schema:
+    type: integer
+  creator: growthepie
+
+- tag_id: contract_monitored
+  name: Smart Contract Monitoring
+  description: Link to information on whether the contract is actively monitored by smart contract monitoring services.
+  schema:
+    type: string
+  creator: Simon Brown
+
+- tag_id: source_code_verified
+  name: Verified Source Code
+  description: Indicates whether the source code of the contract has been verified with one of the public verifiers.
+  schema:
+    type: string
+    enum: [sourcify, blockscout, etherscan]
+  creator: Sourcify
+
+- tag_id: code_language
+  name: Programming Language
+  description: Indicates the programming language used in the smart contract's source code.
+  schema:
+    type: string
+    enum: [solidity, vyper, yul, fe, huff, stylus]
+  creator: Sourcify
+
+- tag_id: code_compiler
+  name: Compiler
+  description: Indicates the compiler and the version used to generate the smart contract's bytecode.
+  schema:
+    type: string
+  creator: Sourcify
+
+- tag_id: paymaster_category
+  name: Paymaster Category
+  description: >
+    Specifies the category of the ERC-4337 Paymaster contract. Paymasters are contracts that can sponsor gas fees for UserOperations (UserOps) by depositing ETH in the EntryPoint contract. Different types of Paymasters implement different logic to determine when to pay. 
+    - 'verifying': These Paymasters run custom verification logic (e.g., whitelists) before approving payment.
+    - 'token': These Paymasters accept ERC-20 tokens from users and convert them into ETH to cover gas fees.
+    - 'verifying_and_token': Hybrid Paymasters that combine both verification and token-based fee payment.
+  schema:
+    type: string
+    enum: [verifying, token, verifying_and_token]
+  creator: 0xKofi
+
+- tag_id: is_bundler
+  name: Is Bundler
+  description: Indicates whether the address functions as a Bundler in the ERC-4337 architecture. Bundlers are EOAs that aggregate multiple UserOperations (UserOps) and submit them to the EntryPoint contract via the handleOps function. They can collect UserOps either directly (common today) or from the ERC-4337 mempool (less widely adopted). Their role is essential in batching transactions and enabling efficient execution of account abstraction flows.
+  schema:
+    type: boolean
+  creator: 0xKofi
+
+- tag_id: is_paymaster
+  name: Is Paymaster
+  description: Indicates whether the address is an ERC-4337 Paymaster contract. Paymasters deposit ETH into the EntryPoint contract and can be selected by users to sponsor their gas fees. The EntryPoint contract calls the Paymaster to verify whether it is willing to pay for a given UserOperation, based on custom criteria like app whitelisting or token exchange.
+  schema:
+    type: boolean
+  creator: 0xKofi
+
+- tag_id: audit
+  name: Audit
+  description: Link to information on a security audit or audit report.
+  schema:
+    type: array
+    items:
+      type: object
+      required: [url, title, date]
+      properties:
+        url:
+          type: string
+          format: uri
+          description: "URL of the external audit report or resource"
+        title:
+          type: string
+          description: "Title of the audit, e.g. 'Smart Contract Security Audit by Trail of Bits'"
+        date:
+          type: string
+          format: date
+          description: "Publication date of the audit report (YYYY-MM-DD)"
+  creator: "Simon Brown, IperGiove"
+
+- tag_id: etf_ticker
+  name: ETF Ticker
+  description: Gives the ticker symbol linked to the ETF
+  schema:
+    type: string
+  creator: johnc
+
+- tag_id: track_outflow
+  name: ETF Track Outflow
+  description: Indicates whether the ETF tracking logic should include outflows
+  schema:
+    type: boolean
+  creator: johnc
+
+- tag_id: is_blacklist.usdc
+  name: Blacklist
+  description: Indicates if the address is blacklisted from transferring USDC.
+  schema:
+    type: boolean
+  creator: denhampreen
+
+- tag_id: is_blacklist.usdt
+  name: Blacklist
+  description: Indicates if the address is blacklisted from transferring USDT.
+  schema:
+    type: boolean
+  creator: denhampreen
+  
+# The following tags provide additional context or reference sources to support and clarify the assigned label.
+
+- tag_id: _comment
+  name: Comment
+  description: An internal description or public comment of the label.
+  schema:
+    type: string
+  creator: growthepie
+
+- tag_id: _source
+  name: Source
+  description: A source or reference to support the label provided.
+  schema:
+    type: string
+  creator: growthepie
